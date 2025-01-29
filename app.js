@@ -60,7 +60,19 @@ app.put('/sigla/:sigla', (req, res) => {
  
     res.status(200).send(carroSelecionado); // Retorna o carro atualizado
 });
- 
+
+app.delete("/:sigla", (req,res) => {
+    const siglainformada = req.params.sigla.toUpperCase();
+    const IndiceCarroSelecionado = carros2025.findIndex(
+        (c) => c.sigla === siglainformada);
+    if (IndiceCarroSelecionado === -1) {
+        res.status(404).send("Não existe um carro com a silga informada");
+        return;
+    }
+    const carroRemovido = carros2025.splice(IndiceCarroSelecionado, 1);
+    res.status(200).send(carroRemovido);
+});
+
 // Define a porta do servidor
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
