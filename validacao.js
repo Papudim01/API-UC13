@@ -26,9 +26,19 @@ export const modeloCarro = Joi.object({
 
 // Validação para atualização de carro
 export const modeloAtualizacaoCarro = Joi.object({
-    nome: Joi.string().min(3), // Nome do carro, pelo menos 3 caracteres
-    sigla: Joi.string().length(3), // Sigla ou modelo, 3 caracteres 
-    velocidadeMaxima: Joi.number().min(1), // Potência mínima de 1 Cv
-    potencia: Joi.number().min(1), // Velocidade mínima de 1km/h
-    consumo: Joi.number().min(0.1), // Consumo mínimo de 0.1
-});
+    nome: Joi.string().min(3).messages({
+        'string.min': 'O nome do carro deve ter pelo menos 3 caracteres.',
+    }),
+    sigla: Joi.string().length(3).messages({
+        'string.length': 'A sigla deve ter exatamente 3 Caracteres.',
+    }),
+    velocidadeMaxima: Joi.number().min(1).messages({
+        'Number.min': 'A velociade maxima deve ser maior ou igual a 1.',
+    }),
+    potencia: Joi.number().min(1).messages ({
+        'number.min': 'O potência deve ser maior ou igual a 1.',
+    }),
+    consumo: Joi.number().min(0.1).messages ({
+        'number.min': 'O consumo deve ser maior ou igual a 0.1.',
+    }),
+}).min(1);

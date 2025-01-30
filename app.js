@@ -23,19 +23,34 @@ app.get('/:sigla', (req, res) => {
     res.status(200).send(carro); // Retorna o carro com status 200
 });
  
-app.post('/', (req, res) => {
-    const novoCarro = req.body; // Obtém o novo carro enviado no corpo da requisição
-    const { error } = modeloCarro.validate(novoCarro); // Valida os dados do novo carro
+// app.post('/', (req, res) => {
+//     const novoCarro = req.body; // Obtém o novo carro enviado no corpo da requisição
+//     const { error } = modeloCarro.validate(novoCarro); // Valida os dados do novo carro
  
-    if (error) {
-        res.status(400).send(error.details[0].message); // Se houver erro de validação, retorna erro 400
+//     if (error) {
+//         res.status(400).send(error.details[0].message); // Se houver erro de validação, retorna erro 400
+//         return;
+//     }
+ 
+//     carros2025.push(novoCarro); // Adiciona o novo carro à lista
+//     res.status(201).send(novoCarro); // Retorna o carro adicionado com status 201 (Criado)
+// });
+
+app.post('/', (req, res) => {
+    const novoCarro = req.body;
+    const carroExiste = carros2025.find(carro => carro.sigla === novoCarro.sigla);
+    if (carroExiste) {
+        return res.status(404).send('já existe um carro cadastrado com essa sigla');
+    }
+    const { error } = modeloCarro.validate(novoCarro);
+    if ( error ) {
+        res.status(404).send(error);
         return;
     }
- 
-    carros2025.push(novoCarro); // Adiciona o novo carro à lista
-    res.status(201).send(novoCarro); // Retorna o carro adicionado com status 201 (Criado)
+    carros2025.push(novoCarro);
+    res.status(201).send(novoCarro);
 });
- 
+
 app.put('/sigla/:sigla', (req, res) => {
     const siglaInformada = req.params.sigla.toUpperCase(); // Obtém a sigla da URL
     const carroSelecionado = carros2025.find((c) => c.sigla === siglaInformada); // Busca o carro pela sigla
