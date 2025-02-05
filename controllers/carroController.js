@@ -1,10 +1,10 @@
 import {
-    getALLCarros,
-    getCarroBysigla,
-    createCarro as modelCreateCarro,
-    updateCarro as modelUpdateCarro,
-    deleteCarro as modelDeleteCarro,
-}   from "../models/carroModels.js";
+        getALLCarros,
+        getCarroBysigla,
+        createCarro as modelCreateCarro,
+        updateCarro as modelUpdateCarro,
+        deleteCarro as modelDeleteCarro,
+    }   from "../models/carroModels.js";
 
 import { modeloCarro, modeloAtualizacaoCarro } from "../Validations/carroValidation.js";
 
